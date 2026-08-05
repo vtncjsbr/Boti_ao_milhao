@@ -3,3 +3,4 @@
 *.ipynb
 *.db
 __pycache__
+raw_data/
