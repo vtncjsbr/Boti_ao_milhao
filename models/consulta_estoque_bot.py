@@ -11,7 +11,7 @@ class ConsultaEstoqueBOT(Base):
     descricao = Column("DESCRICAO", String)
     categoria = Column("CATEGORIA", String)
     classe = Column("CLASSE", String)
-    fases_produtos = Column("FASES PRODUTO", String)
+    fases_produto = Column("FASES PRODUTO", String)
     lancamento = Column("LANCAMENTO", String)
     desativacao = Column("DESATIVACAO", String)
     pdv = Column("PFV", Integer)
