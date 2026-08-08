@@ -1,11 +1,15 @@
 from fastapi import APIRouter, HTTPException, Depends
-from main_fastapi import bcrypt_context
+from main_fastapi import bcrypt_context, ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY, ALGORITHM
 from models.usuarios import Usuario
 from database import pegar_sessao
+from jose import jwt, JWTError
+from datetime import datetime, timedelta, timezone
 
 def criar_token(id_usuario):
-    token = f"aosmdasdmidmow{id_usuario}"
-    return token
+    data_expiracao = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    dic_info = {"sub": id_usuario, "exp": data_expiracao}
+    jwt_codificado = jwt.encode(dic_info, SECRET_KEY, ALGORITHM)
+    return jwt_codificado
 
 def autenticar_usuario(nome, senha, session):
     usuario = session.query(Usuario).filter(Usuario.nome==nome).first()
