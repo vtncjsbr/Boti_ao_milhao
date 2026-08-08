@@ -4,3 +4,4 @@
 *.db
 __pycache__
 raw_data/
+.env
