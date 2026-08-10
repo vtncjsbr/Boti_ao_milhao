@@ -5,8 +5,8 @@ from database import pegar_sessao
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 
-def criar_token(id_usuario):
-    data_expiracao = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+def criar_token(id_usuario, ducarao_token = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
+    data_expiracao = datetime.now(timezone.utc) + ducarao_token
     dic_info = {"sub": id_usuario, "exp": data_expiracao}
     jwt_codificado = jwt.encode(dic_info, SECRET_KEY, ALGORITHM)
     return jwt_codificado
@@ -28,7 +28,9 @@ async def login(nome, senha, session = Depends(pegar_sessao)):
         raise HTTPException(status_code=400, detail="Usuário não encontrado ou credenciais inválidas")
     else:
         access_token = criar_token(usuario.id)
+        refresh_token = criar_token(usuario.id, ducarao_token=timedelta(days=7))
         return {
             "access_token": access_token,
+            "refresh_token": refresh_token,
             "token_type": "Bearer"
         }
