@@ -10,12 +10,4 @@ SessionLocal = sessionmaker(
     autocommit=False
 )
 
-def pegar_sessao():
-    try:
-        Session = SessionLocal
-        session = Session()
-        yield session
-    finally:
-        session.close()
-
 Base = declarative_base()
