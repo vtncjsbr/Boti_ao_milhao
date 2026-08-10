@@ -4,6 +4,7 @@ from models.usuarios import Usuario
 from dependencies import pegar_sessao, verificar_token
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
+from fastapi.security import OAuth2PasswordRequestForm
 
 def criar_token(id_usuario, ducarao_token = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
     data_expiracao = datetime.now(timezone.utc) + ducarao_token
@@ -32,6 +33,18 @@ async def login(nome, senha, session = Depends(pegar_sessao)):
         return {
             "access_token": access_token,
             "refresh_token": refresh_token,
+            "token_type": "Bearer"
+        }
+
+@auth_router.post("/login_form")
+async def login_form(dados_formulario: OAuth2PasswordRequestForm = Depends(), session = Depends(pegar_sessao)):
+    usuario = autenticar_usuario(dados_formulario.username, dados_formulario.password, session)
+    if not usuario:
+        raise HTTPException(status_code=400, detail="Usuário não encontrado ou credenciais inválidas")
+    else:
+        access_token = criar_token(usuario.id)
+        return {
+            "access_token": access_token,
             "token_type": "Bearer"
         }
 
