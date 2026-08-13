@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Login</h2>
+    
+    <form id="formLogin">
+        <input type="text" id="username" name="username" placeholder="Usuário" required>
+        <input type="password" id="password" name="password" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p id="mensagemErro" style="color: red; display: none;">Credenciais inválidas!</p>
+
+    <script>
+    document.getElementById("formLogin").addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const dadosCodificados = new URLSearchParams(formData);
+
+        try {
+            const resposta = await fetch("http://localhost:8000/auth/login_form", {
+                method: "POST",
+                body: dadosCodificados,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+
+            if (resposta.ok) {
+                const dados = await resposta.json();
+                localStorage.setItem("meu_access_token", dados.access_token);
+                localStorage.setItem("meu_refresh_token", dados.refresh_token);
+                window.location.href = "/index.html"; 
+            } else {
+                document.getElementById("mensagemErro").style.display = "block";
+            }
+        } catch (erro) {
+            console.error("Erro ao conectar com a API:", erro);
+            alert("Erro de conexão com o servidor. Verifique o console.");
+        }
+    });
+</script>
+</body>
+</html>

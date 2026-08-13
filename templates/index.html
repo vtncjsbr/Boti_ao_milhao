@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    
+    <script>
+        const token = localStorage.getItem("meu_access_token");
+        
+        if (!token) {
+            window.location.href = "/login.html";
+        }
+    </script>
+</head>
+<body>
+
+    <button onclick="fazerLogout()">Logout</button>
+
+    <script>
+        function fazerLogout() {
+            localStorage.removeItem("meu_access_token");
+            localStorage.removeItem("meu_refresh_token");
+            window.location.href = "/login.html";
+        }
+
+        async function baixarRelatorio() {
+            const token = localStorage.getItem("meu_access_token");
+
+            try {
+                const resposta = await fetchComToken("/report/vendas", { 
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}` 
+                    }
+                });
+
+                if (resposta.ok) {
+                    const blob = await resposta.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const linkDownload = document.createElement('a');
+                    
+                    linkDownload.href = url;
+                    linkDownload.setAttribute('download', 'relatorio_vendas.xlsx'); 
+                    
+                    document.body.appendChild(linkDownload);
+                    linkDownload.click();
+                    linkDownload.parentNode.removeChild(linkDownload);
+                    window.URL.revokeObjectURL(url);
+                    
+                } else {
+                    alert("Erro de autorização. Faça login novamente.");
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            }
+        }
+
+        async function baixarRelatorioBot() {
+            const token = localStorage.getItem("meu_access_token");
+
+            try {
+                const resposta = await fetchComToken("/report/estoque_bot", { 
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}` 
+                    }
+                });
+
+                if (resposta.ok) {
+                    const blob = await resposta.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const linkDownload = document.createElement('a');
+                    
+                    linkDownload.href = url;
+                    linkDownload.setAttribute('download', 'relatorio_estoque_bot.xlsx'); 
+                    
+                    document.body.appendChild(linkDownload);
+                    linkDownload.click();
+                    linkDownload.parentNode.removeChild(linkDownload);
+                    window.URL.revokeObjectURL(url);
+                    
+                } else {
+                    alert("Erro de autorização. Faça login novamente.");
+                }
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+            }
+        }
+
+        async function fetchComToken(url, opcoes = {}) {
+            let token = localStorage.getItem("meu_access_token");
+            
+            opcoes.headers = { ...opcoes.headers, "Authorization": `Bearer ${token}` };
+
+            let resposta = await fetch(url, opcoes);
+
+            if (resposta.status === 401) {
+                console.log("Token principal venceu. Tentando renovar...");
+                const refreshToken = localStorage.getItem("meu_refresh_token");
+
+                if (!refreshToken) {
+                    fazerLogout();
+                    return null;
+                }
+
+                const respostaRefresh = await fetch("/auth/refresh", {
+                    method: "GET",
+                    headers: { "Authorization": `Bearer ${refreshToken}` }
+                });
+
+                if (respostaRefresh.ok) {
+                    const dadosRefresh = await respostaRefresh.json();
+                    
+                    localStorage.setItem("meu_access_token", dadosRefresh.access_token);
+                    console.log("Token renovado com sucesso!");
+
+                    opcoes.headers["Authorization"] = `Bearer ${dadosRefresh.access_token}`;
+                    return await fetch(url, opcoes);
+                } else {
+                    alert("Sua sessão de 7 dias expirou. Faça login novamente.");
+                    fazerLogout();
+                    return null;
+                }
+            }
+
+    return resposta;
+}
+    </script>
+    <div>
+        <button onclick="baixarRelatorio()">Baixar Relatório de Vendas</button>
+        <button onclick="baixarRelatorioBot()">Baixar Relatório de Estoque Bot</button>
+    </div>
+</body>
+</html> 
