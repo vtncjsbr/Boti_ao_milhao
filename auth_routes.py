@@ -6,8 +6,8 @@ from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordRequestForm
 
-def criar_token(id_usuario, ducarao_token = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
-    data_expiracao = datetime.now(timezone.utc) + ducarao_token
+def criar_token(id_usuario, duracao_token = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)):
+    data_expiracao = datetime.now(timezone.utc) + duracao_token
     dic_info = {"sub": str(id_usuario), "exp": data_expiracao}
     jwt_codificado = jwt.encode(dic_info, SECRET_KEY, ALGORITHM)
     return jwt_codificado
@@ -29,7 +29,7 @@ async def login_form(dados_formulario: OAuth2PasswordRequestForm = Depends(), se
         raise HTTPException(status_code=400, detail="Usuário não encontrado ou credenciais inválidas")
     else:
         access_token = criar_token(usuario.id)
-        refresh_token = criar_token(usuario.id, ducarao_token=timedelta(days=7))
+        refresh_token = criar_token(usuario.id, duracao_token=timedelta(days=7))
         return {
             "access_token": access_token,
             "refresh_token": refresh_token,
