@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from dependencies import pegar_sessao, verificar_token
 from models.raw_relatorio_abc_vendas import RelatorioAbcVendas
+from models.consulta_estoque_bot import ConsultaEstoqueBOT
 from database import db
 from sqlalchemy import select
 import pandas as pd
@@ -9,20 +10,28 @@ from fastapi.responses import StreamingResponse
 
 report_router = APIRouter(prefix="/report", tags=["Report"], dependencies=[Depends(verificar_token)])
 
-@report_router.get("/vendas")
-async def relatorio_vendas():
-    stmt = select(RelatorioAbcVendas)
-
+def criar_relatorio(banco, sheet_name: str, filename: str):
+    stmt = select(banco)
+    
     with db.connect() as conn:
         df = pd.read_sql(stmt, con=conn)
 
     arquivo = BytesIO()
 
     with pd.ExcelWriter(arquivo) as writer:
-        df.to_excel(writer, index=False, sheet_name="Vendas")
+        df.to_excel(writer, index=False, sheet_name=sheet_name)
     arquivo.seek(0)
 
     return StreamingResponse(arquivo, 
                             media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
-                            headers={"Content-Disposition": "attachment; filename=relatorio_vendas.xlsx"
+                            headers={"Content-Disposition": f"attachment; filename={filename}.xlsx"
             })
+
+
+@report_router.get("/vendas")
+async def relatorio_vendas():
+    criar_relatorio(RelatorioAbcVendas, 'vendas', 'vendas')
+
+@report_router.get("/estoque_bot")
+async def relatorio_estoque_bot():
+    criar_relatorio(ConsultaEstoqueBOT, 'consulta_estoque_bot', 'consulta_estoque_bot')
