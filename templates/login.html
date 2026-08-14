@@ -2,10 +2,17 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <title>Login</title>
+    <script>
+        window.API_BASE_URL = "{{ api_base_url }}";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/js/services/apiClient.js"></script>
+    <script src="/static/js/services/auth.js"></script>
 </head>
 <body>
     <h2>Login</h2>
-    
+
     <form id="formLogin">
         <input type="text" id="username" name="username" placeholder="Usuário" required>
         <input type="password" id="password" name="password" placeholder="Senha" required>
@@ -18,31 +25,17 @@
     document.getElementById("formLogin").addEventListener("submit", async function(event) {
         event.preventDefault();
 
-        const formData = new FormData(this);
-        const dadosCodificados = new URLSearchParams(formData);
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
         try {
-            const resposta = await fetch("http://localhost:8000/auth/login_form", {
-                method: "POST",
-                body: dadosCodificados,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
-
-            if (resposta.ok) {
-                const dados = await resposta.json();
-                localStorage.setItem("meu_access_token", dados.access_token);
-                localStorage.setItem("meu_refresh_token", dados.refresh_token);
-                window.location.href = "/index.html"; 
-            } else {
-                document.getElementById("mensagemErro").style.display = "block";
-            }
+            await Auth.login(username, password);
+            window.location.href = "/index.html";
         } catch (erro) {
             console.error("Erro ao conectar com a API:", erro);
-            alert("Erro de conexão com o servidor. Verifique o console.");
+            document.getElementById("mensagemErro").style.display = "block";
         }
     });
-</script>
+    </script>
 </body>
 </html>
