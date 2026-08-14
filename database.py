@@ -1,8 +1,14 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
+load_dotenv()
 
-db = create_engine("sqlite:///raw_data.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///raw_data.db")
+
+db = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
     bind=db,
