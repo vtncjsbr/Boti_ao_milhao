@@ -2,8 +2,8 @@ from sqlalchemy import Column, String, Integer, Float
 from database import Base
 
 
-class ConsultaEstoqueEUD(Base):
-    __tablename__ = "consulta_de_estoque_eud"
+class ConsultaEstoqueBOT(Base):
+    __tablename__ = "raw_consulta_de_estoque_bot"
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     sku = Column("SKU", Integer)
@@ -24,3 +24,4 @@ class ConsultaEstoqueEUD(Base):
     cobertura_atual = Column("COBERTURA ATUAL", Integer)
     cobertura_atual_transito = Column("COBERTURA ATUAL + TRANSITO", Integer)
     cobertura_projetada = Column("COBERTURA PROJETADA", Integer)
+

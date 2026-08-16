@@ -3,7 +3,7 @@ from database import Base
 
 
 class PedidoSemanalEspecial(Base):
-    __tablename__ = "pedidos_semanais_especiais"
+    __tablename__ = "raw_pedidos_semanais_especiais"
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     ciclo = Column("CICLO", Integer)

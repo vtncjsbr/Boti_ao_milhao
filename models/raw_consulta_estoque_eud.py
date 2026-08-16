@@ -2,8 +2,8 @@ from sqlalchemy import Column, String, Integer, Float
 from database import Base
 
 
-class ConsultaEstoqueQDB(Base):
-    __tablename__ = "consulta_de_estoque_qdb"
+class ConsultaEstoqueEUD(Base):
+    __tablename__ = "raw_consulta_de_estoque_eud"
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     sku = Column("SKU", Integer)

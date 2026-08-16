@@ -3,7 +3,7 @@ from database import Base
 
 
 class RupturaTotalBot(Base):
-    __tablename__ = "ruptura_total_bot"
+    __tablename__ = "raw_ruptura_total_bot"
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     ciclo = Column("CICLO", Integer)
