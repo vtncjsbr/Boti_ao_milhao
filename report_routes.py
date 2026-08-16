@@ -30,8 +30,8 @@ def criar_relatorio(banco, sheet_name: str, filename: str):
 
 @report_router.get("/vendas")
 async def relatorio_vendas():
-    criar_relatorio(RelatorioAbcVendas, 'vendas', 'vendas')
+    return criar_relatorio(RelatorioAbcVendas, 'vendas', 'vendas')
 
 @report_router.get("/estoque_bot")
 async def relatorio_estoque_bot():
-    criar_relatorio(ConsultaEstoqueBOT, 'consulta_estoque_bot', 'consulta_estoque_bot')
+    return criar_relatorio(ConsultaEstoqueBOT, 'consulta_estoque_bot', 'consulta_estoque_bot')
