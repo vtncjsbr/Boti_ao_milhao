@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from dependencies import pegar_sessao, verificar_token
 from models.raw_relatorio_abc_vendas import RelatorioAbcVendas
-from models.consulta_estoque_bot import ConsultaEstoqueBOT
+from models.raw_consulta_estoque_bot import ConsultaEstoqueBOT
 from database import db
 from sqlalchemy import select
 import pandas as pd
