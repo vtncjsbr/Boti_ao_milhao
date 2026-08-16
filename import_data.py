@@ -1,9 +1,9 @@
 import pandas as pd
-from models.consulta_estoque_bot import ConsultaEstoqueBOT
-from models.consulta_estoque_qdb import ConsultaEstoqueQDB
-from models.consulta_estoque_eud import ConsultaEstoqueEUD
-from models.ruptura_total_bot import RupturaTotalBot
-from models.pedido_semanal_especial import PedidoSemanalEspecial
+from models.raw_consulta_estoque_bot import ConsultaEstoqueBOT
+from models.raw_consulta_estoque_qdb import ConsultaEstoqueQDB
+from models.raw_consulta_estoque_eud import ConsultaEstoqueEUD
+from models.raw_ruptura_total_bot import RupturaTotalBot
+from models.raw_pedido_semanal_especial import PedidoSemanalEspecial
 from models.raw_relatorio_abc_vendas import RelatorioAbcVendas
 from database import SessionLocal
 
