@@ -7,7 +7,7 @@ class ConsultaEstoqueQDB(Base):
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     sku = Column("SKU", Integer)
-    sku_para = Column("SKU_PARA", String)
+    sku_para = Column("SKU PARA", String)
     descricao = Column("DESCRICAO", String)
     categoria = Column("CATEGORIA", String)
     classe = Column("CLASSE", String)
