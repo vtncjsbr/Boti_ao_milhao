@@ -14,7 +14,7 @@ class ConsultaEstoqueEUD(Base):
     fases_produto = Column("FASES PRODUTO", String)
     lancamento = Column("LANCAMENTO", String)
     desativacao = Column("DESATIVACAO", String)
-    pdv = Column("PFV", Integer)
+    pdv = Column("PDV", Integer)
     estoque_atual = Column("ESTOQUE ATUAL", Integer)
     estoque_em_transito = Column("ESTOQUE EM TRANSITO", Integer)
     pedido_pendente = Column("PEDIDO PENDENTE", Integer)
