@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import Column, NVARCHAR, Integer, Float
 from database import Base
 
 
@@ -7,13 +7,13 @@ class ConsultaEstoqueQDB(Base):
 
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     sku = Column("SKU", Integer)
-    sku_para = Column("SKU PARA", String)
-    descricao = Column("DESCRICAO", String)
-    categoria = Column("CATEGORIA", String)
-    classe = Column("CLASSE", String)
-    fases_produto = Column("FASES PRODUTO", String)
-    lancamento = Column("LANCAMENTO", String)
-    desativacao = Column("DESATIVACAO", String)
+    sku_para = Column("SKU PARA", NVARCHAR)
+    descricao = Column("DESCRICAO", NVARCHAR)
+    categoria = Column("CATEGORIA", NVARCHAR)
+    classe = Column("CLASSE", NVARCHAR)
+    fases_produto = Column("FASES PRODUTO", NVARCHAR)
+    lancamento = Column("LANCAMENTO", NVARCHAR)
+    desativacao = Column("DESATIVACAO", NVARCHAR)
     pdv = Column("PDV", Integer)
     estoque_atual = Column("ESTOQUE ATUAL", Integer)
     estoque_em_transito = Column("ESTOQUE EM TRANSITO", Integer)
