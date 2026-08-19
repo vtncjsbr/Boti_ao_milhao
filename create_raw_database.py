@@ -7,5 +7,6 @@ from models.raw_pedido_semanal_especial import PedidoSemanalEspecial
 from models.raw_ruptura_total_bot import RupturaTotalBot
 from models.usuarios import Usuario
 from models.raw_relatorio_abc_vendas import RelatorioAbcVendas
+from models.dim_produtos import DimProdutos
 
 Base.metadata.create_all(bind=db)
