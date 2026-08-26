@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from dependencies import pegar_sessao, verificar_token
 from models.raw_relatorio_abc_vendas import RelatorioAbcVendas
 from models.raw_consulta_estoque_bot import ConsultaEstoqueBOT
+from models.dim_produtos import DimProdutos
 from database import db
 from sqlalchemy import select
 import pandas as pd
@@ -35,3 +36,7 @@ async def relatorio_vendas():
 @report_router.get("/estoque_bot")
 async def relatorio_estoque_bot():
     return criar_relatorio(ConsultaEstoqueBOT, 'consulta_estoque_bot', 'consulta_estoque_bot')
+
+@report_router.get("/produtos")
+async def relatorio_produtos():
+    return criar_relatorio(DimProdutos, 'produtos', 'produtos')
