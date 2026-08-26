@@ -20,7 +20,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["*"], #Colocar o url do site, segue exemplo: "http://18.231.100.50"
     allow_credentials=True,
     allow_methods=["GET", "POST"], 
     allow_headers=["*"],
