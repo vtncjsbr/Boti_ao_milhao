@@ -5,3 +5,5 @@
 __pycache__
 raw_data/
 .env
+data/
+*.txt
