@@ -22,6 +22,7 @@
     <div>
         <button onclick="baixarRelatorio()">Baixar Relatório de Vendas</button>
         <button onclick="baixarRelatorioBot()">Baixar Relatório de Estoque Bot</button>
+        <button onclick="baixarRelatorioProduto()">Baixa Relatório de Produtos</button>
     </div>
 
     <script>
@@ -37,6 +38,15 @@
         async function baixarRelatorioBot() {
             try {
                 await Report.download("/report/estoque_bot", "relatorio_estoque_bot.xlsx");
+            } catch (erro) {
+                console.error("Erro na requisição:", erro);
+                alert("Erro de autorização. Faça login novamente.");
+            }
+        }
+
+        async function baixarRelatorioProduto() {
+            try {
+                await Report.download("/report/produtos", "produtos.xlsx");
             } catch (erro) {
                 console.error("Erro na requisição:", erro);
                 alert("Erro de autorização. Faça login novamente.");
