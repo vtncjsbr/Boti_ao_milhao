@@ -1,0 +1,46 @@
+body {
+   
+
+}
+
+header {
+    /* background-color: rgb(195, 193, 193); */
+    margin: 2%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.botao_logout {
+    cursor: pointer;
+    margin-left: auto;
+    width: 8%;
+    height: 7%;
+}
+
+main {
+    /* background-color: rgb(195, 193, 193); */
+    margin: 2%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.caixa {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 31.833%;
+    word-wrap: break-word;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+
+h4 {
+    text-align: center;
+}
+
+.botao_relatorios {
+    display: grid;
+    place-items: center;
+}
