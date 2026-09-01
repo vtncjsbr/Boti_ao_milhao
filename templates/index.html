@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Relatórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
     <script>
         window.API_BASE_URL = "{{ api_base_url }}";
     </script>
@@ -17,13 +18,42 @@
     </script>
 </head>
 <body>
-    <button onclick="Auth.logout()">Logout</button>
-
-    <div>
-        <button onclick="baixarRelatorio()">Baixar Relatório de Vendas</button>
-        <button onclick="baixarRelatorioBot()">Baixar Relatório de Estoque Bot</button>
-        <button onclick="baixarRelatorioProduto()">Baixa Relatório de Produtos</button>
-    </div>
+    <header>
+        <h1>Boti</h1>
+        <button onclick="Auth.logout()" class="botao_logout">Logout</button>
+    </header>
+    
+    <main>
+        <div class="caixa">
+            <h4>Relatório de Vendas</h4>
+            <p>Colocar aqui uma descrição para que serve o relatório</p>
+            <div class="botao_relatorios">
+                <button onclick="baixarRelatorio()">Download</button> 
+            </div>     
+        </div>
+        <div class="caixa">
+            <h4>Relatório de Produtos</h4>
+            <p>Relatório contendo todos os produtos das marcas BOT, QDB e EUD</p>
+            <div class="botao_relatorios">
+                <button onclick="baixarRelatorioProduto()">Download</button>
+            </div>     
+        </div>
+        <div class="caixa">
+            <h4>Relatório de Estoque Bot</h4>
+            <p>Colocar aqui uma descrição para que serve o relatório</p>
+            <div class="botao_relatorios">
+                <button onclick="baixarRelatorioBot()">Download</button>
+            </div>     
+        </div>
+        <div class="caixa">
+            <h4>teste tamanho</h4>
+            <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+            <div class="botao_relatorios">
+                <button onclick="baixarRelatorioBot()">Download</button>
+            </div>     
+        </div>
+    </main>
+    
 
     <script>
         async function baixarRelatorio() {
